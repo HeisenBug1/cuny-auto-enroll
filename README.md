@@ -7,6 +7,30 @@ It stops after it enrolls at least **one** class. So, you will have to run the s
 
 ## Initial Setup Requirements:
 
-You need to provide screenshots of specific areas of the CUNYFirst website in order for the script to know where it should click. Since every display has different screen resolutions, you will need to provide screenshot samples from the computer you will run this on for it to work.
+Step 1:
+Make sure these packages are installed:
+	1) pyautogui
+	2) pillow
+
+To install these package, type in terminal:
+pip install pyautogui pillow OR pip3 install pyautogui pillow
+
+Step 2:
+Clone this repository in you computer.
+<!-- put code in here -->
+
+Step 3:
+Put some classes in your shopping cart in CUNYFirst if its empty.
+
+Step 4:
+Finally, you need to provide some screenshots of specific areas of the CUNYFirst interface in order for the script to know where it should click. Since every display has different screen resolutions, you will need to provide screenshot samples from the computer you will run this on for it to work.
+
+Put these screenshot samples inside the Samples directory 
 
 ![No.1](https://github.com/fake-root/cuny-auto-enroll/blob/main/ScreenShots/1.png)
+
+
+## To run the script
+
+Open your terminal or command prompt, then goto the directory the python script is located. Open CUNYFirst in a browser. And simply run the script.
+python autoEnroll.py OR python3 autoEnroll.py
