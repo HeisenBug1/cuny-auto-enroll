@@ -8,3 +8,5 @@ It stops after it enrolls at least **one** class. So, you will have to run the s
 ## Initial Setup Requirements:
 
 You need to provide screenshots of specific areas of the CUNYFirst website in order for the script to know where it should click. Since every display has different screen resolutions, you will need to provide screenshot samples from the computer you will run this on for it to work.
+
+![No.1](https://github.com/fake-root/cuny-auto-enroll/blob/main/ScreenShots/1.png)
