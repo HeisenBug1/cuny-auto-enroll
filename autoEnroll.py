@@ -11,6 +11,14 @@ enrolled = False
 loggedIn = False
 cordinates = None
 
+def takeTermInput():
+    num = input("Enter a number from 1 - "+str(len(cordinates))+": ")
+    num = int(num)
+    if num > 0 and num <= len(cordinates):
+        return (num -1)
+    else:
+        takeTermInput()
+
 def re_login():
     cordinates = pyautogui.locateOnScreen('cunyFirst.png')
     if cordinates is not None:
