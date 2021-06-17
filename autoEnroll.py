@@ -1,6 +1,7 @@
 from platform import release
 import pyautogui
 import time
+from os import listdir
 
 pyautogui.PAUSE = 1
 pyautogui.FAILSAFE = False
@@ -9,9 +10,30 @@ count = 0
 sleepTime = 300
 enrolled = False
 loggedIn = False
-cordinates = None
+samplesDir = 'Samples/'
+samples = None
+termSet = False
+term = None
 
-def takeTermInput():
+# check if all the files exist in the Samples directory
+if len(listdir(samplesDir)) != 11:
+    print("There needs to be 11 sample screenshots inside the Samples directory. Quitting")
+    quit()
+else:
+    samples = listdir(samplesDir)
+    samples.sort()
+    for i in range(0, 9):
+        if samples[i][0] != "0":
+            print("First 9 files need to start with \"0\"")
+            print("eg: 05.png... Please rename.. Quitting")
+            quit()
+
+# get a sample file location
+def getSample(index):
+    return (samplesDir + samples[index-1])
+
+# choose a term
+def takeTermInput(cordinates):
     num = input("Enter a number from 1 - "+str(len(cordinates))+": ")
     num = int(num)
     if num > 0 and num <= len(cordinates):
@@ -19,8 +41,9 @@ def takeTermInput():
     else:
         takeTermInput()
 
+# relogin if something goes wrong and try again
 def re_login():
-    cordinates = pyautogui.locateOnScreen('cunyFirst.png')
+    cordinates = pyautogui.locateOnScreen(getSample(2))
     if cordinates is not None:
         pyautogui.click(cordinates)
     else:
@@ -33,8 +56,9 @@ def re_login():
     pyautogui.hotkey('enter')
     time.sleep(5)
 
+# logs in to CUNYFirst from start page
 def initialLogin():
-    cordinates = pyautogui.locateOnScreen('login.png')
+    cordinates = pyautogui.locateOnScreen(getSample(1))
     if cordinates is not None:
         pyautogui.click(cordinates)
         time.sleep(5)
@@ -43,8 +67,9 @@ def initialLogin():
         print("Can't find initial login button")
         return False
 
+# goto student center 
 def gotoStudentCenter():
-    cordinates = pyautogui.locateOnScreen('stuCent.png')
+    cordinates = pyautogui.locateOnScreen(getSample(3))
     if cordinates is not None:
         pyautogui.click(cordinates)
         time.sleep(5)
@@ -53,8 +78,9 @@ def gotoStudentCenter():
         print("Can't find Student Center")
         return False
 
-def goto_cart_in_stuCenter():
-    cordinates = pyautogui.locateOnScreen('eShopCart.png')
+# goto plan in student center
+def gotoPlan():
+    cordinates = pyautogui.locateOnScreen(getSample(4))
     if cordinates is not None:
         pyautogui.click(cordinates)
         time.sleep(5)
@@ -63,14 +89,9 @@ def goto_cart_in_stuCenter():
         print("Can't find cart in student center")
         return False
 
-def isSignedIn():
-    if pyautogui.locateOnScreen('signedIn.png') is not None:
-        return True
-    else:
-        return False
-
+# clicks the shopping cart
 def clickCart():
-    cordinates = pyautogui.locateOnScreen('cart.png')
+    cordinates = pyautogui.locateOnScreen(getSample(5))
     if cordinates is not None:
         pyautogui.click(cordinates)
         time.sleep(5)
@@ -79,18 +100,33 @@ def clickCart():
         print("Can't find Shopping Cart")
         return False
 
-def clickSummerTerm():
-    cordinates = pyautogui.locateOnScreen('summer.png')
-    if cordinates is not None:
-        pyautogui.click(cordinates[0]+6, cordinates[1]+6)
+# click a term
+def clickTerm():
+    global term
+    global termSet
+    if termSet:
+        cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
+        pyautogui.click(cordinates[term])
         time.sleep(1)
         return True
     else:
-        print("Can't find Summer Term")
-        return False
+        cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
+        if cordinates is not None:
 
+            print("There are " + str(len(cordinates)) +" terms on the screen")
+            print("Please select one")
+            term = takeTermInput(cordinates)
+            pyautogui.click(cordinates[term])
+            termSet = True
+            time.sleep(1)
+            return True
+        else:
+            print("Can't find Summer Term")
+            return False
+
+# clicks continue after selecting a term
 def clickContinue():
-    cordinates = pyautogui.locateOnScreen('cont.png')
+    cordinates = pyautogui.locateOnScreen(getSample(7))
     if cordinates is not None:
         pyautogui.click(cordinates)
         time.sleep(5)
@@ -99,23 +135,47 @@ def clickContinue():
         print("Can't find continue button")
         return False
 
+# click check boxes for open classes
+def clickCheckBox(checkBoxes, openClass):
+    minDiff = 999999999
+    index = -1
+    count = 0
+    y2 = openClass[1]
+    for checks in checkBoxes:
+        y1 = checks[1]
+        diff = abs(y2 - y1)
+        if minDiff > diff:
+            minDiff = diff
+            index = count
+        count += 1
+    pyautogui.click(checkBoxes[index])
+
+
 while enrolled == False:
-    if initialLogin() == False and gotoStudentCenter() == False and goto_cart_in_stuCenter() == False:
+    one = initialLogin()
+    two = gotoStudentCenter()
+    three = gotoPlan()
+    if one == False and two == False and three == False:
         re_login()
     else:
         loggedIn = True
 
     while loggedIn == True and enrolled == False:
-        if clickSummerTerm() == False or clickContinue() == False:
+        if clickTerm() == False:
+            loggedIn = False
+            break
+        if clickContinue() == False:
             loggedIn = False
             break
 
-        gLight = list(pyautogui.locateAllOnScreen('green.png'))
+        gLight = list(pyautogui.locateAllOnScreen(getSample(11)))
         if len(gLight) == 0:    # if no class is open
             count = count + 1
             print("Try Count: " + str(count) + " (wait " + str(sleepTime/60) +" min)")
             time.sleep(sleepTime)
         else:
+            checkBoxes = list(pyautogui.locateAllOnScreen(getSample(8)))
+
             print("Found: " + str(len(gLight)) +" classes open")
 
             # select all available classes
@@ -124,7 +184,7 @@ while enrolled == False:
                 time.sleep(1)
 
             # finish enrolling in open classes
-            enroll = pyautogui.locateOnScreen('enroll.png')
+            enroll = pyautogui.locateOnScreen(getSample(9))
             if enroll is None:
                 print("Can't find enroll button")
                 loggedIn = False
@@ -132,7 +192,7 @@ while enrolled == False:
             pyautogui.click(enroll)
             time.sleep(5)
 
-            fEnroll = pyautogui.locateOnScreen('fEnroll.png')
+            fEnroll = pyautogui.locateOnScreen(getSample(10))
             if fEnroll is None:
                 print("Can't find Finish Enroll button")
                 loggedIn = False
