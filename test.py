@@ -4,11 +4,19 @@ from os import listdir
 
 pyautogui.PAUSE = 1
 pyautogui.FAILSAFE = False
-samples = 'Samples/'
+samplesDir = 'Samples/'
+samples = None
 cordinates = None
 termSet = False
 term = None
 count = 0
+
+def checkSamples():
+	if len(listdir(samplesDir)) != 11:
+		print("There needs to be 11 sample screenshots inside the Samples directory. Quitting")
+		quit()
+	# else:
+
 
 # def takeTermInput():
 # 	num = input("Enter a number from 1 - "+str(len(cordinates))+": ")
@@ -39,6 +47,9 @@ count = 0
 # takeTermInput()
 # num = input("Enter 1 - "+str(5)+": ")
 # print(num)
-print(listdir(samples))
+
+samples = listdir(samplesDir)
+samples.sort()
+print(samples)
 # pyautogui.click(list(pyautogui.locateAllOnScreen('Samples/6.png'))[0])
 # print(list(pyautogui.locateAllOnScreen(samples + '6.png')))
