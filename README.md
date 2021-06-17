@@ -3,7 +3,7 @@
 
 This **python** script will automatically enroll you to any course saved in your shopping cart in CUNYFirst.
 It uses image recognition to identify and click in your browser. And it will check if any course opens up every 5 min and then it will automatically enroll you in those courses.
-It stops after it enrolls **at least one** course. So, you will have to run the script again to keep checking for any other classes in your shopping cart.
+It stops after enrolling **at least one** course. So, you will have to run the script again to keep checking for any other classes in your shopping cart.
 
 
 ## Initial Setup Requirements:
