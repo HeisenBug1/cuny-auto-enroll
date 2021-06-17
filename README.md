@@ -15,8 +15,8 @@ Make sure the latest python is installed in your computer.
 Make sure these python packages are installed:
 
  1. Windows: run in command prompt `pip install pyautogui pillow`
- 2. MAC: run in terminal `sudo pip3 install pyobjc-framework-Quartz pyobjc-core pyobjc pyautogui pillow`
- 3. Linux: run in terminal `sudo pip3 install python3-xlib pyautogui pillow`
+ 2. MAC: run in terminal `pip3 install pyobjc-framework-Quartz pyobjc-core pyobjc pyautogui pillow`
+ 3. Linux: run in terminal `pip3 install python3-xlib pyautogui pillow`
  
  Linux needs additional dependencies: `sudo apt install scrot python3-tk python3-dev`
 
