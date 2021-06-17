@@ -1,3 +1,5 @@
+***Note***: Not tested on MAC and Windows. Apparently pyautogui's image recognision is not working on MAC for some reason. Ill update this as I learn more.
+
 
 # What this script does
 
@@ -31,9 +33,11 @@ Put some classes in your shopping cart in CUNYFirst if its empty.
 **Step 4:**
 Finally, you need to provide some screenshots of specific areas of the CUNYFirst interface in order for the script to know where it should click. Since every display has different screen resolutions, you will need to provide screenshot samples from the computer you will run this on for it to work.
 
-Take screenshots of the **red boxes** displayed below, and store them inside the **Samples** directory and name them as `01.png, 02.png ...` or `01.jpg, 02.jpg...` as listed below. Note: png is better since it's lossless, hence it contains accurate color code for each pixel. It might work with jpg, I'm not sure, I didnt test with jpg.
+Goto CUNYFirst website and take screenshots of the **red boxes** displayed below, and store them inside the **Samples** directory and name them as `01.png, 02.png ...` or `01.jpg, 02.jpg...` as listed below. Note: png is better since it's lossless, hence it contains accurate color code for each pixel. It might work with jpg, I'm not sure, I didnt test with jpg.
 
 For reference, view the ones I used in my computer inside the samples directory. You can try to see if my samples work for you, but most likely you will need to provide your own. If you do provide your own, make sure to remove/replace mine. Since, there cannot be more or less than 11 sample files inside that directory.
+
+***Note***: MAC creates hidden files when you add/modify something in a directory. Make sure to remove the hidden `.DS_Store` file from Samples directory.
 
 ![No.1](https://github.com/rez1-inf/cuny-auto-enroll/blob/main/Required%20Screen%20Shots/1.png)
 ![No.2](https://github.com/rez1-inf/cuny-auto-enroll/blob/main/Required%20Screen%20Shots/2.png)
