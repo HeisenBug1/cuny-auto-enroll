@@ -48,6 +48,8 @@ For reference, view the ones I used in my computer inside the samples directory.
 Open your terminal, then goto the directory the python script is located. Open CUNYFirst in a browser. And simply run the script.
 `python autoEnroll.py` OR `python3 autoEnroll.py`
 
+Everytime you run this script, after it reaches the term selection page in CUNYFirst, go back to the terminal and select which term you want to try enrolling to. After that, it will remember the term selection and keep trying until at least one class is succesfully enrolled.
+
 *Note*: This script assumes your browser automatically fills in login information for CUNYFirst
 
 Please let me know if you face any issues. I'll try my best to fix them.
