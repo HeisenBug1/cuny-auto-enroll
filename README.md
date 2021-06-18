@@ -1,4 +1,6 @@
-***Note***: Not tested on MAC and Windows. Apparently pyautogui's image recognision is not working on MAC for some reason. Ill update this as I learn more.
+***Update 1***: MacOS has issues with `PyAutoGUI`. It can locate areas on a screen but the cordinates are off by a few 100 pixels. It's an issue that the developers haven't fixed yet, so unfortunately it will not work on MacOS. I will update as soon as I find a fix. [You can follow the issue here](https://github.com/asweigart/pyautogui/issues/589#issue-924442603)
+
+***Note***: I did not test this on Windows yet, but I assume it should work fine on Windows.
 
 
 # What this script does
