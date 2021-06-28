@@ -1,4 +1,5 @@
 from platform import release
+from datetime import datetime
 import pyautogui
 import time
 from os import listdir
@@ -106,9 +107,13 @@ def clickTerm():
     global termSet
     if termSet:
         cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
-        pyautogui.click(cordinates[term])
-        time.sleep(1)
-        return True
+        if cordinates is not None:
+            pyautogui.click(cordinates[term])
+            time.sleep(1)
+            return True
+        else:
+            print("Extected term selection page but can't find. Trying to re-login (reset)")
+            return False
     else:
         cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
         if cordinates is not None:
@@ -171,7 +176,7 @@ while enrolled == False:
         gLight = list(pyautogui.locateAllOnScreen(getSample(11)))
         if len(gLight) == 0:    # if no class is open
             count = count + 1
-            print("Try Count: " + str(count) + " (wait " + str(sleepTime/60) +" min)")
+            print("Try Count: " + str(count) + " (wait " + str(sleepTime/60) +" min) [" + datetime.now().strftime("%h %d - %I:%M %p") + "]")
             time.sleep(sleepTime)
         else:
             checkBoxes = list(pyautogui.locateAllOnScreen(getSample(8)))
@@ -198,7 +203,7 @@ while enrolled == False:
                 loggedIn = False
                 continue
             pyautogui.click(fEnroll)
-            print("Enrolled")
+            print("Enrolled [" + datetime.now().strftime("%h %d - %I:%M %p") + "]")
             enrolled = True
             break
 
