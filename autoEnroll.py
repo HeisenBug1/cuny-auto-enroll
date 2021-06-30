@@ -1,8 +1,12 @@
 from platform import release
 from datetime import datetime
+import platform
 import pyautogui
 import time
+import sys
+import os.path
 from os import listdir
+import os
 
 pyautogui.PAUSE = 1
 pyautogui.FAILSAFE = False
@@ -16,18 +20,40 @@ samples = None
 termSet = False
 term = None
 
+# check screen resolution and set sample directory
+x, y = pyautogui.size()
+if x == 1440 and y == 900:
+    samplesDir += "1440x900/"
+if x == 1920 and y == 1080:
+    samplesDir += "1920x1080/"
+
+# Create samples directory for current screen resolution if it doesn't exist
+if os.path.exists(samplesDir) is False:
+    os.mkdir(samplesDir)
+    print("Please put the samples in " + samplesDir + " directory and then re-run this script")
+    sys.exit(0)
+
 # check if all the files exist in the Samples directory
-if len(listdir(samplesDir)) != 11:
-    print("There needs to be 11 sample screenshots inside the Samples directory. Quitting")
-    quit()
-else:
-    samples = listdir(samplesDir)
-    samples.sort()
-    for i in range(0, 9):
-        if samples[i][0] != "0":
-            print("First 9 files need to start with \"0\"")
-            print("eg: 05.png... Please rename.. Quitting")
-            quit()
+while True:
+    tryAgain = False
+    if len(listdir(samplesDir)) != 11:
+        if platform.system() == 'Darwin':
+            if os.path.exists(samplesDir + ".DS_Store"):
+                os.remove(samplesDir + ".DS_Store")
+                tryAgain = True
+        if not tryAgain:
+            print("There needs to be EXACTLY 11 sample screenshots inside the " + samplesDir +" directory.")
+            print("Please make sure there are no hidden or unusable files in that directory. Quitting")
+            sys.exit(1)
+    else:
+        samples = listdir(samplesDir)
+        samples.sort()
+        for i in range(0, 9):
+            if samples[i][0] != "0":
+                print("First 9 files need to start with \"0\"")
+                print("eg: 05.png... Please rename.. Quitting")
+                sys.exit(2)
+        break
 
 # get a sample file location
 def getSample(index):
@@ -49,7 +75,7 @@ def re_login():
         pyautogui.click(cordinates)
     else:
         print("Can't locate browser for CUNY. Quitting")
-        quit()
+        sys.exit(3)
     pyautogui.hotkey('ctrl', 'l')
     time.sleep(0.5)
     pyautogui.typewrite("home.cunyfirst.cuny.edu")
@@ -107,12 +133,12 @@ def clickTerm():
     global termSet
     if termSet:
         cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
-        if cordinates is not None:
+        if cordinates is not None and len(cordinates) >= term:
             pyautogui.click(cordinates[term])
             time.sleep(1)
             return True
         else:
-            print("Extected term selection page but can't find. Trying to re-login (reset)")
+            print("Expected term selection page but can't find. Trying to re-login (reset)")
             return False
     else:
         cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
