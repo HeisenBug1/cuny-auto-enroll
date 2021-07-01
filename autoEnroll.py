@@ -166,14 +166,14 @@ def clickContinue():
         print("Can't find continue button")
         return False
 
-# click check boxes for open classes
+# click a single check box for 1 open class (this is used in a loop from caller)
 def clickCheckBox(checkBoxes, openClass):
     minDiff = 999999999
     index = -1
     count = 0
     y2 = openClass[1]
-    for checks in checkBoxes:
-        y1 = checks[1]
+    for box in checkBoxes:
+        y1 = box[1]
         diff = abs(y2 - y1)
         if minDiff > diff:
             minDiff = diff
@@ -206,13 +206,19 @@ while enrolled == False:
             time.sleep(sleepTime)
         else:
             checkBoxes = list(pyautogui.locateAllOnScreen(getSample(8)))
+            if len(checkBoxes) < len(gLight):
+                print("# of check boxes are less than open classes. Re-Trying")
+                loggedIn = False
+                break
 
             print("Found: " + str(len(gLight)) +" classes open")
 
             # select all available classes
-            for i in range(0, len(gLight)):
-                pyautogui.click(189, gLight[i][1]+5, button='left')
-                time.sleep(1)
+            for openClass in gLight:
+                # pyautogui.click(189, gLight[i][1]+5, button='left')
+                clickCheckBox()
+            
+            time.sleep(1)
 
             # finish enrolling in open classes
             enroll = pyautogui.locateOnScreen(getSample(9))
