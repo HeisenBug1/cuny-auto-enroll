@@ -133,7 +133,7 @@ def clickTerm():
     global termSet
     if termSet:
         cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
-        if cordinates is not None and len(cordinates) >= term:
+        if cordinates is not None and len(cordinates) >= 1:
             pyautogui.click(cordinates[term])
             time.sleep(1)
             return True
@@ -142,7 +142,7 @@ def clickTerm():
             return False
     else:
         cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
-        if cordinates is not None:
+        if cordinates is not None and len(cordinates) >= 1:
 
             print("There are " + str(len(cordinates)) +" terms on the screen")
             print("Please select one")
@@ -152,7 +152,7 @@ def clickTerm():
             time.sleep(1)
             return True
         else:
-            print("Can't find Summer Term")
+            print("Expected term selection page but can't find. Trying to re-login (reset)")
             return False
 
 # clicks continue after selecting a term
