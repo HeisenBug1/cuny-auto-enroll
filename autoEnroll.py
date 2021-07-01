@@ -215,8 +215,7 @@ while enrolled == False:
 
             # select all available classes
             for openClass in gLight:
-                # pyautogui.click(189, gLight[i][1]+5, button='left')
-                clickCheckBox()
+                clickCheckBox(checkBoxes, openClass)
             
             time.sleep(1)
 
