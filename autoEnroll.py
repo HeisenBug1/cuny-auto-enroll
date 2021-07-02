@@ -43,7 +43,7 @@ while True:
                 tryAgain = True
         if not tryAgain:
             print("There needs to be EXACTLY 11 sample screenshots inside the " + samplesDir +" directory.")
-            print("Please make sure there are no hidden or unusable files in that directory. Quitting")
+            print("Please make sure there are no hidden and/or unusable files in that directory. Quitting")
             sys.exit(1)
     else:
         samples = listdir(samplesDir)
@@ -75,6 +75,7 @@ def re_login():
         pyautogui.click(cordinates)
     else:
         print("Can't locate browser for CUNY. Quitting")
+        print("Please replace sample for: " + getSample(2))
         sys.exit(3)
     pyautogui.hotkey('ctrl', 'l')
     time.sleep(0.5)
@@ -92,6 +93,7 @@ def initialLogin():
         return True
     else:
         print("Can't find initial login button")
+        print("If it keeps happening, please replace sample for: " + getSample(1))
         return False
 
 # goto student center 
@@ -103,6 +105,7 @@ def gotoStudentCenter():
         return True
     else:
         print("Can't find Student Center")
+        print("If it keeps happening, please replace sample for: " + getSample(3))
         return False
 
 # goto plan in student center
@@ -114,6 +117,7 @@ def gotoPlan():
         return True
     else:
         print("Can't find cart in student center")
+        print("If it keeps happening, please replace sample for: " + getSample(4))
         return False
 
 # clicks the shopping cart
@@ -125,6 +129,7 @@ def clickCart():
         return True
     else:
         print("Can't find Shopping Cart")
+        print("If it keeps happening, please replace sample for: " + getSample(5))
         return False
 
 # click a term
@@ -143,7 +148,6 @@ def clickTerm():
     else:
         cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
         if cordinates is not None and len(cordinates) >= 1:
-
             print("There are " + str(len(cordinates)) +" terms on the screen")
             print("Please select one")
             term = takeTermInput(cordinates)
@@ -153,6 +157,7 @@ def clickTerm():
             return True
         else:
             print("Expected term selection page but can't find. Trying to re-login (reset)")
+            print("If it keeps happening, please replace sample for: " + getSample(6))
             return False
 
 # clicks continue after selecting a term
@@ -164,6 +169,7 @@ def clickContinue():
         return True
     else:
         print("Can't find continue button")
+        print("If it keeps happening, please replace sample for: " + getSample(7))
         return False
 
 # click a single check box for 1 open class (this is used in a loop from caller)
@@ -203,11 +209,14 @@ while enrolled == False:
         if len(gLight) == 0:    # if no class is open
             count = count + 1
             print("Try Count: " + str(count) + " (wait " + str(sleepTime/60) +" min) [" + datetime.now().strftime("%h %d - %I:%M %p") + "]")
+            if count % 10 == 0:
+                print("Note: if you can observe an open class and this script is not noticing it,\nthen please replace sample for: " + getSample(11))
             time.sleep(sleepTime)
         else:
             checkBoxes = list(pyautogui.locateAllOnScreen(getSample(8)))
             if len(checkBoxes) < len(gLight):
                 print("# of check boxes are less than open classes. Re-Trying")
+                print("If it keeps happening, please replace sample for: " + getSample(8))
                 loggedIn = False
                 break
 
@@ -223,6 +232,7 @@ while enrolled == False:
             enroll = pyautogui.locateOnScreen(getSample(9))
             if enroll is None:
                 print("Can't find enroll button")
+                print("If it keeps happening, please replace sample for: " + getSample(9))
                 loggedIn = False
                 break
             pyautogui.click(enroll)
@@ -231,6 +241,7 @@ while enrolled == False:
             fEnroll = pyautogui.locateOnScreen(getSample(10))
             if fEnroll is None:
                 print("Can't find Finish Enroll button")
+                print("If it keeps happening, please replace sample for: " + getSample(10))
                 loggedIn = False
                 continue
             pyautogui.click(fEnroll)
