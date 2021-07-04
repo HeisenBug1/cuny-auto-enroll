@@ -19,6 +19,7 @@ samplesDir = 'Samples/'
 samples = None
 termSet = False
 term = None
+OS_Info = platform.system()
 
 # check screen resolution and set sample directory
 x, y = pyautogui.size()
@@ -56,8 +57,12 @@ while True:
         break
 
 # get a sample file location
-def getSample(index):
-    return (samplesDir + samples[index-1])
+def getSample(sampleNum):
+    return (samplesDir + samples[sampleNum-1])
+
+# click based on
+def click(sampleNum):
+
 
 # choose a term
 def takeTermInput(cordinates):
