@@ -64,6 +64,8 @@ def click(sampleNum):
         x = coordinates[0]
         y = coordinates[1]
         if OS_Info == "Darwin":
+            coordinates = pyautogui.locateCenterOnScreen(getSample(2))
+            pyautogui.click(coordinates[0]/2, coordinates[1]/2)
             pyautogui.click(x/2, y/2)
         else:
             pyautogui.click(x, y)
@@ -76,7 +78,8 @@ def clickCoord(coordinates):
     if OS_Info == "Darwin":
         x = coordinates[0]
         y = coordinates[1]
-        pyautogui.click(x/2, y/2)
+        click(2)
+        pyautogui.click((x/2)+5, (y/2)+5)
     else:
         pyautogui.click(coordinates)
 
@@ -205,6 +208,14 @@ def clickCheckBox(checkBoxes, openClass):
         count += 1
     clickCoord(checkBoxes[index])
 
+# scroll to make sure something (a button for example) is visible
+def isVisible(sampleNum):
+    while True:
+        if pyautogui.locateCenterOnScreen(getSample(sampleNum)) is None:
+            pyautogui.scroll(-5)
+        else:
+            break
+
 
 while enrolled == False:
     one = initialLogin()
@@ -223,9 +234,13 @@ while enrolled == False:
             loggedIn = False
             break
 
+        isVisible(9)    # make sure all classes are visible
+        pyautogui.moveTo(getSample(9))
+
         gLight = list(pyautogui.locateAllOnScreen(getSample(11)))
         if len(gLight) == 0:    # if no class is open
             count = count + 1
+            pyautogui.scroll(10)
             print("Try Count: " + str(count) + " (wait " + str(sleepTime/60) +" min) [" + datetime.now().strftime("%h %d - %I:%M %p") + "]")
             if count % 10 == 0:
                 print("Note: if you can observe an open class and this script is not noticing it,\nthen please replace sample for: " + getSample(11) +"\n")
@@ -255,6 +270,7 @@ while enrolled == False:
                 break
             time.sleep(5)
 
+            isVisible(10)   # make sure finish enroll button is visible
             fEnroll = click(10)
             if fEnroll is False:
                 print("Can't find Finish Enroll button")
