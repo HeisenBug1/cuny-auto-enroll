@@ -59,22 +59,30 @@ def getSample(sampleNum):
 
 # click based on
 def click(sampleNum):
-
+    x, y = pyautogui.locateCenterOnScreen(getSample(sampleNum), confidence=0.9)
+    if coordinates is not None:
+        if OS_Info == "Darwin":
+            pyautogui.click(x/2, y/2)
+        else:
+            pyautogui.click(x, y)
+        return True
+    else:
+        return False
 
 # choose a term
-def takeTermInput(cordinates):
-    num = input("Enter a number from 1 - "+str(len(cordinates))+": ")
+def takeTermInput(coordinates):
+    num = input("Enter a number from 1 - "+str(len(coordinates))+": ")
     num = int(num)
-    if num > 0 and num <= len(cordinates):
+    if num > 0 and num <= len(coordinates):
         return (num -1)
     else:
         takeTermInput()
 
 # relogin if something goes wrong and try again
 def re_login():
-    cordinates = pyautogui.locateOnScreen(getSample(2))
-    if cordinates is not None:
-        pyautogui.click(cordinates)
+    coordinates = pyautogui.locateOnScreen(getSample(2))
+    if coordinates is not None:
+        pyautogui.click(coordinates)
     else:
         print("Can't locate browser for CUNY. Quitting")
         print("Please replace sample for: " + getSample(2) +"\n")
@@ -88,9 +96,9 @@ def re_login():
 
 # logs in to CUNYFirst from start page
 def initialLogin():
-    cordinates = pyautogui.locateOnScreen(getSample(1))
-    if cordinates is not None:
-        pyautogui.click(cordinates)
+    coordinates = pyautogui.locateOnScreen(getSample(1))
+    if coordinates is not None:
+        pyautogui.click(coordinates)
         time.sleep(5)
         return True
     else:
@@ -100,9 +108,9 @@ def initialLogin():
 
 # goto student center 
 def gotoStudentCenter():
-    cordinates = pyautogui.locateOnScreen(getSample(3))
-    if cordinates is not None:
-        pyautogui.click(cordinates)
+    coordinates = pyautogui.locateOnScreen(getSample(3))
+    if coordinates is not None:
+        pyautogui.click(coordinates)
         time.sleep(5)
         return True
     else:
@@ -112,9 +120,9 @@ def gotoStudentCenter():
 
 # goto plan in student center
 def gotoPlan():
-    cordinates = pyautogui.locateOnScreen(getSample(4))
-    if cordinates is not None:
-        pyautogui.click(cordinates)
+    coordinates = pyautogui.locateOnScreen(getSample(4))
+    if coordinates is not None:
+        pyautogui.click(coordinates)
         time.sleep(5)
         return True
     else:
@@ -124,9 +132,9 @@ def gotoPlan():
 
 # clicks the shopping cart
 def clickCart():
-    cordinates = pyautogui.locateOnScreen(getSample(5))
-    if cordinates is not None:
-        pyautogui.click(cordinates)
+    coordinates = pyautogui.locateOnScreen(getSample(5))
+    if coordinates is not None:
+        pyautogui.click(coordinates)
         time.sleep(5)
         return True
     else:
@@ -139,21 +147,21 @@ def clickTerm():
     global term
     global termSet
     if termSet:
-        cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
-        if cordinates is not None and len(cordinates) >= 1:
-            pyautogui.click(cordinates[term])
+        coordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
+        if coordinates is not None and len(coordinates) >= 1:
+            pyautogui.click(coordinates[term])
             time.sleep(1)
             return True
         else:
             print("Expected term selection page but can't find. Trying to re-login (reset)")
             return False
     else:
-        cordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
-        if cordinates is not None and len(cordinates) >= 1:
-            print("There are " + str(len(cordinates)) +" terms on the screen")
+        coordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
+        if coordinates is not None and len(coordinates) >= 1:
+            print("There are " + str(len(coordinates)) +" terms on the screen")
             print("Please select one")
-            term = takeTermInput(cordinates)
-            pyautogui.click(cordinates[term])
+            term = takeTermInput(coordinates)
+            pyautogui.click(coordinates[term])
             termSet = True
             time.sleep(1)
             return True
@@ -164,9 +172,9 @@ def clickTerm():
 
 # clicks continue after selecting a term
 def clickContinue():
-    cordinates = pyautogui.locateOnScreen(getSample(7))
-    if cordinates is not None:
-        pyautogui.click(cordinates)
+    coordinates = pyautogui.locateOnScreen(getSample(7))
+    if coordinates is not None:
+        pyautogui.click(coordinates)
         time.sleep(5)
         return True
     else:
