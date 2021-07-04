@@ -35,7 +35,7 @@ Clone this repository in you computer. Type in terminal:
 Put some classes in your shopping cart in CUNYFirst if its empty.
 
 **Step 4:**
-Run the script (see below how to run). It will check your screen resolution and create a folder inside the samples directory where you can provide your screenshots (explained below). I already provided samples for MacBook 13 inch in the `Samples/1440x900/` directory, so most likely the fonts and stuff will match and you can just run this script and have it do its thing, otherwise you will need to take the screenshots.
+Run the script (see below how to run). It will check your screen resolution and create a folder inside the samples directory where you can provide your screenshots (explained below). I already provided samples for MacBook 13 inch in the `Samples/1440x900/` directory, so most likely the fonts and stuff will match (for Safari browser) and you can just run this script and have it do its thing, otherwise you will need to take the screenshots.
 
 *Note*: If any sample at some point does not match, the script will tell you which one to update
 
