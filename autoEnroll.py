@@ -23,10 +23,7 @@ OS_Info = platform.system()
 
 # check screen resolution and set sample directory
 x, y = pyautogui.size()
-if x == 1440 and y == 900:
-    samplesDir += "1440x900/"
-if x == 1920 and y == 1080:
-    samplesDir += "1920x1080/"
+samplesDir += str(x) +"x"+ str(y) +"/"
 
 # Create samples directory for current screen resolution if it doesn't exist
 if os.path.exists(samplesDir) is False:
