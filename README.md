@@ -1,4 +1,6 @@
-***Update 1***: MacOS has issues with `PyAutoGUI`. It can locate areas on a screen but the cordinates are off by a few 100 pixels. It's an issue that the developers haven't fixed yet, so unfortunately it will not work on MacOS. I will update as soon as I find a fix. [You can follow the issue here](https://github.com/asweigart/pyautogui/issues/589#issue-924442603)
+***Update 2***: It finally works in MacOS :)... `PyAutoGUI` is still broken for MacOS but I found a workaround
+
+***Update 1***: ~~MacOS has issues with `PyAutoGUI`. It can locate areas on a screen but the cordinates are off by a factor of 2. It's an issue that the developers haven't fixed yet, so unfortunately it will not work on MacOS. I will update as soon as I find a fix.~~ [You can follow the issue here](https://github.com/asweigart/pyautogui/issues/589#issue-924442603)
 
 ***Note***: I did not test this on Windows yet, but I assume it should work fine on Windows.
 
@@ -33,13 +35,18 @@ Clone this repository in you computer. Type in terminal:
 Put some classes in your shopping cart in CUNYFirst if its empty.
 
 **Step 4:**
-Finally, you need to provide some screenshots of specific areas of the CUNYFirst interface in order for the script to know where it should click. Since every display has different screen resolutions, you will need to provide screenshot samples from the computer you will run this on for it to work.
+Run the script (see below how to run). It will check your screen resolution and create a folder inside the samples directory where you can provide your screenshots (explained below). I already provided samples for MacBook 13 inch in the `Samples/1440x900/` directory, so most likely the fonts and stuff will match and you can just run this script and have it do its thing, otherwise you will need to take the screenshots.
+
+*Note*: If any sample at some point does not match, the script will tell you which one to update
+
+## Screen Shot Samples:
+You need to provide some screenshots of specific areas of the CUNYFirst interface in order for the script to know where it should click. Since every display has different screen resolutions, you will need to provide screenshot samples from the computer you will run this on for it to work.
 
 Goto CUNYFirst website and take screenshots of the **red boxes** displayed below, and store them inside the **Samples** directory and name them as `01.png, 02.png ...` or `01.jpg, 02.jpg...` as listed below. Note: png is better since it's lossless, hence it contains accurate color code for each pixel. It might work with jpg, I'm not sure, I didnt test with jpg.
 
 For reference, view the ones I used in my computer inside the samples directory. You can try to see if my samples work for you, but most likely you will need to provide your own. If you do provide your own, make sure to remove/replace mine. Since, there cannot be more or less than 11 sample files inside that directory.
 
-***Note***: MAC creates hidden files when you add/modify something in a directory. Make sure to remove the hidden `.DS_Store` file from Samples directory.
+***Note***: ~~MAC creates hidden files when you add/modify something in a directory. Make sure to remove the hidden `.DS_Store` file from Samples directory.~~ The script will automatically it
 
 ![No.1](https://github.com/rez1-inf/cuny-auto-enroll/blob/main/Required%20Screen%20Shots/1.png)
 ![No.2](https://github.com/rez1-inf/cuny-auto-enroll/blob/main/Required%20Screen%20Shots/2.png)
@@ -51,8 +58,9 @@ For reference, view the ones I used in my computer inside the samples directory.
 
 ## To run the script
 
-Open your terminal, then goto the directory the python script is located. Open CUNYFirst in a browser. And simply run the script.
-`python autoEnroll.py` OR `python3 autoEnroll.py`
+ 1. Open your terminal, then `cd` into the directory this python script is located.
+ 2. Open CUNYFirst in a browser.
+ 3. Run the script `python autoEnroll.py` OR `python3 autoEnroll.py`
 
 Everytime you run this script, after it reaches the term selection page in CUNYFirst, go back to the terminal and select which term you want to try enrolling to. After that, it will remember the term selection and keep trying until at least one class is succesfully enrolled.
 
