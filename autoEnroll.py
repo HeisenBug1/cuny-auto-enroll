@@ -57,10 +57,12 @@ while True:
 def getSample(sampleNum):
     return (samplesDir + samples[sampleNum-1])
 
-# click based on
+# click based on OS (MacOS needs correction in coordinates)
 def click(sampleNum):
-    x, y = pyautogui.locateCenterOnScreen(getSample(sampleNum), confidence=0.9)
+    coordinates = pyautogui.locateCenterOnScreen(getSample(sampleNum))
     if coordinates is not None:
+        x = coordinates[0]
+        y = coordinates[1]
         if OS_Info == "Darwin":
             pyautogui.click(x/2, y/2)
         else:
@@ -68,6 +70,15 @@ def click(sampleNum):
         return True
     else:
         return False
+
+# click based on x, y coordinates
+def clickCoord(coordinates):
+    if OS_Info == "Darwin":
+        x = coordinates[0]
+        y = coordinates[1]
+        pyautogui.click(x/2, y/2)
+    else:
+        pyautogui.click(coordinates)
 
 # choose a term
 def takeTermInput(coordinates):
@@ -80,14 +91,15 @@ def takeTermInput(coordinates):
 
 # relogin if something goes wrong and try again
 def re_login():
-    coordinates = pyautogui.locateOnScreen(getSample(2))
-    if coordinates is not None:
-        pyautogui.click(coordinates)
-    else:
+    ret = click(2)
+    if ret is False:
         print("Can't locate browser for CUNY. Quitting")
         print("Please replace sample for: " + getSample(2) +"\n")
         sys.exit(3)
-    pyautogui.hotkey('ctrl', 'l')
+    if OS_Info == "Darwin":
+        pyautogui.hotkey('command', 'l')
+    else:
+        pyautogui.hotkey('ctrl', 'l')
     time.sleep(0.5)
     pyautogui.typewrite("home.cunyfirst.cuny.edu")
     time.sleep(0.5)
@@ -96,9 +108,8 @@ def re_login():
 
 # logs in to CUNYFirst from start page
 def initialLogin():
-    coordinates = pyautogui.locateOnScreen(getSample(1))
-    if coordinates is not None:
-        pyautogui.click(coordinates)
+    ret = click(1)
+    if ret is True:
         time.sleep(5)
         return True
     else:
@@ -108,9 +119,8 @@ def initialLogin():
 
 # goto student center 
 def gotoStudentCenter():
-    coordinates = pyautogui.locateOnScreen(getSample(3))
-    if coordinates is not None:
-        pyautogui.click(coordinates)
+    ret = click(3)
+    if ret is True:
         time.sleep(5)
         return True
     else:
@@ -120,9 +130,8 @@ def gotoStudentCenter():
 
 # goto plan in student center
 def gotoPlan():
-    coordinates = pyautogui.locateOnScreen(getSample(4))
-    if coordinates is not None:
-        pyautogui.click(coordinates)
+    ret = click(4)
+    if ret is True:
         time.sleep(5)
         return True
     else:
@@ -132,9 +141,8 @@ def gotoPlan():
 
 # clicks the shopping cart
 def clickCart():
-    coordinates = pyautogui.locateOnScreen(getSample(5))
-    if coordinates is not None:
-        pyautogui.click(coordinates)
+    ret = click(5)
+    if ret is True:
         time.sleep(5)
         return True
     else:
@@ -149,7 +157,7 @@ def clickTerm():
     if termSet:
         coordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
         if coordinates is not None and len(coordinates) >= 1:
-            pyautogui.click(coordinates[term])
+            clickCoord(coordinates[term])
             time.sleep(1)
             return True
         else:
@@ -161,7 +169,8 @@ def clickTerm():
             print("There are " + str(len(coordinates)) +" terms on the screen")
             print("Please select one")
             term = takeTermInput(coordinates)
-            pyautogui.click(coordinates[term])
+            time.sleep(1)
+            clickCoord(coordinates[term])
             termSet = True
             time.sleep(1)
             return True
@@ -172,9 +181,8 @@ def clickTerm():
 
 # clicks continue after selecting a term
 def clickContinue():
-    coordinates = pyautogui.locateOnScreen(getSample(7))
-    if coordinates is not None:
-        pyautogui.click(coordinates)
+    ret = click(7)
+    if ret is True:
         time.sleep(5)
         return True
     else:
@@ -195,7 +203,7 @@ def clickCheckBox(checkBoxes, openClass):
             minDiff = diff
             index = count
         count += 1
-    pyautogui.click(checkBoxes[index])
+    clickCoord(checkBoxes[index])
 
 
 while enrolled == False:
@@ -239,22 +247,20 @@ while enrolled == False:
             time.sleep(1)
 
             # finish enrolling in open classes
-            enroll = pyautogui.locateOnScreen(getSample(9))
-            if enroll is None:
+            enroll = click(9)
+            if enroll is False:
                 print("Can't find enroll button")
                 print("If it keeps happening, please replace sample for: " + getSample(9) +"\n")
                 loggedIn = False
                 break
-            pyautogui.click(enroll)
             time.sleep(5)
 
-            fEnroll = pyautogui.locateOnScreen(getSample(10))
-            if fEnroll is None:
+            fEnroll = click(10)
+            if fEnroll is False:
                 print("Can't find Finish Enroll button")
                 print("If it keeps happening, please replace sample for: " + getSample(10) +"\n")
                 loggedIn = False
-                continue
-            pyautogui.click(fEnroll)
+                break
             print("Enrolled [" + datetime.now().strftime("%h %d - %I:%M %p") + "]")
             enrolled = True
             break
