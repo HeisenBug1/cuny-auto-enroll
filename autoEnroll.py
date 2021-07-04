@@ -61,17 +61,32 @@ def getSample(sampleNum):
 def click(sampleNum):
     coordinates = pyautogui.locateCenterOnScreen(getSample(sampleNum))
     if coordinates is not None:
-        x = coordinates[0]
-        y = coordinates[1]
         if OS_Info == "Darwin":
-            coordinates = pyautogui.locateCenterOnScreen(getSample(2))
+            x = coordinates[0]
+            y = coordinates[1]
+            coordinates = pyautogui.locateCenterOnScreen(getSample(2)) # click on browser berfore clicking target (macOS issue)
             pyautogui.click(coordinates[0]/2, coordinates[1]/2)
             pyautogui.click(x/2, y/2)
         else:
-            pyautogui.click(x, y)
+            pyautogui.click(coordinates)
         return True
     else:
         return False
+
+# move mouse to
+def moveTo(sampleNum):
+    coordinates = pyautogui.locateCenterOnScreen(getSample(sampleNum))
+    if coordinates is not None:
+        if OS_Info == "Darwin":
+            x = coordinates[0]/2
+            y = coordinates[1]/2
+            pyautogui.moveTo(x, y)
+        else:
+            pyautogui.moveTo(coordinates)
+        return True
+    else:
+        return False
+
 
 # click based on x, y coordinates
 def clickCoord(coordinates):
@@ -235,12 +250,12 @@ while enrolled == False:
             break
 
         isVisible(9)    # make sure all classes are visible
-        pyautogui.moveTo(getSample(9))
+        moveTo(9)
 
         gLight = list(pyautogui.locateAllOnScreen(getSample(11)))
         if len(gLight) == 0:    # if no class is open
             count = count + 1
-            pyautogui.scroll(10)
+            pyautogui.scroll(50)
             print("Try Count: " + str(count) + " (wait " + str(sleepTime/60) +" min) [" + datetime.now().strftime("%h %d - %I:%M %p") + "]")
             if count % 10 == 0:
                 print("Note: if you can observe an open class and this script is not noticing it,\nthen please replace sample for: " + getSample(11) +"\n")
