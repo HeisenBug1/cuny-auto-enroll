@@ -39,6 +39,9 @@ Run the script (see below how to run). It will check your screen resolution and 
 
 *Note*: If any sample at some point does not match, the script will tell you which one to update
 
+**Step 5:**
+When it reaches the term selection page, check the terminal, it will ask for your input to select which term you want to enroll in. Type in the number corrosponding to the term and press `return`/`enter`... and from then on it will keep trying automatically.
+
 ## Screen Shot Samples:
 You need to provide some screenshots of specific areas of the CUNYFirst interface in order for the script to know where it should click. Since every display has different screen resolutions, you will need to provide screenshot samples from the computer you will run this on for it to work.
 
