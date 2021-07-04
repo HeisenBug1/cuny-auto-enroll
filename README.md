@@ -49,7 +49,7 @@ Goto CUNYFirst website and take screenshots of the **red boxes** displayed below
 
 For reference, view the ones I used in my computer inside the samples directory. You can try to see if my samples work for you, but most likely you will need to provide your own. If you do provide your own, make sure to remove/replace mine. Since, there cannot be more or less than 11 sample files inside that directory.
 
-***Note***: ~~MAC creates hidden files when you add/modify something in a directory. Make sure to remove the hidden `.DS_Store` file from Samples directory.~~ The script will automatically it
+***Note***: ~~MAC creates hidden files when you add/modify something in a directory. Make sure to remove the hidden `.DS_Store` file from Samples directory.~~ The script will automatically delete it
 
 ![No.1](https://github.com/rez1-inf/cuny-auto-enroll/blob/main/Required%20Screen%20Shots/1.png)
 ![No.2](https://github.com/rez1-inf/cuny-auto-enroll/blob/main/Required%20Screen%20Shots/2.png)
@@ -62,7 +62,7 @@ For reference, view the ones I used in my computer inside the samples directory.
 ## To run the script
 
  1. Open your terminal, then `cd` into the directory this python script is located.
- 2. Open CUNYFirst in a browser.
+ 2. Open CUNYFirst in a browser and login.
  3. Run the script `python autoEnroll.py` OR `python3 autoEnroll.py`
 
 Everytime you run this script, after it reaches the term selection page in CUNYFirst, go back to the terminal and select which term you want to try enrolling to. After that, it will remember the term selection and keep trying until at least one class is succesfully enrolled.
