@@ -20,6 +20,7 @@ samples = None
 termSet = False
 term = None
 OS_Info = platform.system()
+pixelRatio = pyautogui.screenshot().size[0]/pyautogui.size().width
 
 # check screen resolution and set sample directory
 x, y = pyautogui.size()
@@ -61,14 +62,14 @@ def getSample(sampleNum):
 def click(sampleNum):
     coordinates = pyautogui.locateCenterOnScreen(getSample(sampleNum))
     if coordinates is not None:
-        if OS_Info == "Darwin":
-            x = coordinates[0]
-            y = coordinates[1]
+        x = x/pixelRatio
+        y = y/pixelRatio
+        if OS_Info == "Darwin": # if macOS
             coordinates = pyautogui.locateCenterOnScreen(getSample(2)) # click on browser berfore clicking target (macOS issue)
-            pyautogui.click(coordinates[0]/2, coordinates[1]/2)
-            pyautogui.click(x/2, y/2)
+            pyautogui.click(coordinates[0]/pixelRatio, coordinates[1]/pixelRatio)   #click cunyFirst logo first
+            pyautogui.click(x, y)   # main target to click
         else:
-            pyautogui.click(coordinates)
+            pyautogui.click(x, y)
         return True
     else:
         return False
@@ -77,12 +78,9 @@ def click(sampleNum):
 def moveTo(sampleNum):
     coordinates = pyautogui.locateCenterOnScreen(getSample(sampleNum))
     if coordinates is not None:
-        if OS_Info == "Darwin":
-            x = coordinates[0]/2
-            y = coordinates[1]/2
-            pyautogui.moveTo(x, y)
-        else:
-            pyautogui.moveTo(coordinates)
+        x = x/pixelRatio
+        y = y/pixelRatio
+        pyautogui.moveTo(x, y)
         return True
     else:
         return False
@@ -91,10 +89,10 @@ def moveTo(sampleNum):
 # click based on x, y coordinates
 def clickCoord(coordinates):
     if OS_Info == "Darwin":
-        x = coordinates[0]
-        y = coordinates[1]
+        x = coordinates[0]/pixelRatio
+        y = coordinates[1]/pixelRatio
         click(2)
-        pyautogui.click((x/2)+5, (y/2)+5)
+        pyautogui.click(x+5, y+5)   # offset by 5 pixel in macOS
     else:
         pyautogui.click(coordinates)
 
