@@ -62,8 +62,8 @@ def getSample(sampleNum):
 def click(sampleNum):
     coordinates = pyautogui.locateCenterOnScreen(getSample(sampleNum))
     if coordinates is not None:
-        x = x/pixelRatio
-        y = y/pixelRatio
+        x = coordinates[0]/pixelRatio
+        y = coordinates[1]/pixelRatio
         if OS_Info == "Darwin": # if macOS
             coordinates = pyautogui.locateCenterOnScreen(getSample(2)) # click on browser berfore clicking target (macOS issue)
             pyautogui.click(coordinates[0]/pixelRatio, coordinates[1]/pixelRatio)   #click cunyFirst logo first
@@ -78,8 +78,8 @@ def click(sampleNum):
 def moveTo(sampleNum):
     coordinates = pyautogui.locateCenterOnScreen(getSample(sampleNum))
     if coordinates is not None:
-        x = x/pixelRatio
-        y = y/pixelRatio
+        x = coordinates[0]/pixelRatio
+        y = coordinates[1]/pixelRatio
         pyautogui.moveTo(x, y)
         return True
     else:
