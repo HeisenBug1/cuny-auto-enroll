@@ -9,7 +9,7 @@ from os import listdir
 import os
 
 pyautogui.PAUSE = 1
-pyautogui.FAILSAFE = False
+pyautogui.FAILSAFE = True
 
 count = 0
 sleepTime = 300
