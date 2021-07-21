@@ -1,15 +1,16 @@
+# What is it??
+
+This **python** script will automatically enroll you to any course saved in your shopping cart in CUNYFirst.
+It uses image recognition to identify and click in your browser. And it will check if any course opens up every 5 min and then it will automatically enroll you in those courses.
+It stops after enrolling **at least one** course.
+This way you can sleep, go out, or do whatever you want and not have to constantly check if a class opens up for you to register.
+
+
 ***Update 2***: It finally works in MacOS :)... `PyAutoGUI` is still broken for MacOS but I found a workaround
 
 ***Update 1***: ~~MacOS has issues with `PyAutoGUI`. It can locate areas on a screen but the cordinates are off by a factor of 2. It's an issue that the developers haven't fixed yet, so unfortunately it will not work on MacOS. I will update as soon as I find a fix.~~ [You can follow the issue here](https://github.com/asweigart/pyautogui/issues/589#issue-924442603)
 
 ***Note***: I did not test this on Windows yet, but I assume it should work fine on Windows.
-
-
-# What this script does
-
-This **python** script will automatically enroll you to any course saved in your shopping cart in CUNYFirst.
-It uses image recognition to identify and click in your browser. And it will check if any course opens up every 5 min and then it will automatically enroll you in those courses.
-It stops after enrolling **at least one** course. So, you will have to run the script again to keep checking for any other classes in your shopping cart.
 
 
 ## Initial Setup Requirements:
@@ -32,7 +33,7 @@ Clone this repository in you computer. Type in terminal:
 `git clone https://github.com/rez1-inf/cuny-auto-enroll.git`
 
 **Step 3:**
-Put some classes in your shopping cart in CUNYFirst if its empty.
+Login into your CUNYFirst and put some classes in your shopping cart.
 
 **Step 4:**
 Run the script (see below how to run). It will check your screen resolution and create a folder inside the samples directory where you can provide your screenshots (explained below). I already provided samples for MacBook 13 inch in the `Samples/1440x900/` directory, so most likely the fonts and stuff will match (for Safari browser) and you can just run this script and have it do its thing, otherwise you will need to take the screenshots.
@@ -68,6 +69,9 @@ For reference, view the ones I used in my computer inside the samples directory.
 Everytime you run this script, after it reaches the term selection page in CUNYFirst, go back to the terminal and select which term you want to try enrolling to. After that, it will remember the term selection and keep trying until at least one class is succesfully enrolled.
 
 *Note*: This script assumes your browser automatically fills in login information for CUNYFirst. Otherwise just start the script after logging in CUNYFirst, but it may stop if working if for some reason you get logged out.
+
+## Manually stop the script
+Open your terminal, press `ctrl` and `c` simultaniously, to terminate.
 
 ***Important***: Make sure not to minimize or cover the CUNYFirst interface from your screen, if the script cannot see CUNYFirst, it will stop running soon. You can make the window smaller, but make sure all the buttons and stuff are visible so the script can do its job.
 
