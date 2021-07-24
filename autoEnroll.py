@@ -151,7 +151,7 @@ def gotoPlan():
         time.sleep(5)
         return True
     else:
-        print("Can't find cart in student center")
+        print("Can't find 'plan' in student center")
         print("If it keeps happening, please replace sample for: " + getSample(4) +"\n")
         return False
 
@@ -170,6 +170,7 @@ def clickCart():
 def clickTerm():
     global term
     global termSet
+    isVisible(7)    # make sure continue button is visible (hence all terms as well)
     if termSet:
         coordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
         if coordinates is not None and len(coordinates) >= 1:
@@ -182,6 +183,11 @@ def clickTerm():
     else:
         coordinates = list(pyautogui.locateAllOnScreen(getSample(6)))
         if coordinates is not None and len(coordinates) >= 1:
+            if OS_Info == "Darwin":
+                pyautogui.hotkey('command', 'tab')
+            else:
+                pyautogui.hotkey('alt', 'tab')
+            time.sleep(1)
             print("There are " + str(len(coordinates)) +" terms on the screen")
             print("Please select one")
             term = takeTermInput(coordinates)
@@ -223,9 +229,14 @@ def clickCheckBox(checkBoxes, openClass):
 
 # scroll to make sure something (a button for example) is visible
 def isVisible(sampleNum):
+    tryCount = 0
     while True:
         if pyautogui.locateCenterOnScreen(getSample(sampleNum)) is None:
-            pyautogui.scroll(-5)
+            pyautogui.scroll(-2)
+            tryCount += 1
+            if tryCount == 5:
+                print("Cant find "+ getSample(sampleNum) +"\nPlease get new screenshot for that sample")
+                sys.exit(4)
         else:
             break
 
@@ -247,8 +258,8 @@ while enrolled == False:
             loggedIn = False
             break
 
-        isVisible(9)    # make sure all classes are visible
-        moveTo(9)
+        isVisible(9)    # make sure (enroll button is visible) hence all classes are visible
+        moveTo(9)   # to avoid blocking green status buttons on screen by the mouse
 
         gLight = list(pyautogui.locateAllOnScreen(getSample(11)))
         if len(gLight) == 0:    # if no class is open
